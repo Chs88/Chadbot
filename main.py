@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 import requests
 from bs4 import BeautifulSoup
 from datetime import date
 from decouple import config
+import json
 
 
 class Chadbot:
@@ -49,6 +51,7 @@ class Chadbot:
         bot.sendtext("================================")
         bot.sendtext(
             f"Good morning Krisz, today is: {self.DotW}. {self.today}!")
+        bot.sendtext(f"The weather in Ealing is: {bot.get_weather()}")
         bot.sendtext("Here is a Blog post:")
         post = self.get_blog_post(self.url)
         bot.send_blogpost(post)
@@ -60,6 +63,24 @@ class Chadbot:
                 "Thursday", "Friday", "Saturday", "Sunday"]
         dayNumber = date.weekday(self.today)
         return days[dayNumber]
+
+    def get_weather(self):
+        base_url = "http://api.openweathermap.org/data/2.5/weather?"
+        city_name = "Ealing, GB"
+        api_key = config('WEATHER_API')
+        complete_url = base_url + "appid=" + api_key + "&q=" + city_name
+        response = requests.get(complete_url)
+        x = response.json()
+        if x["cod"] != "404":
+            y = x["main"]
+            # store the value corresponding
+            # to the "temp" key of y
+            current_temperature = str(round(y["temp"] - 273.15, 2))
+            z = x["weather"]
+            weather_description = str(z[0]["description"])
+            weather_report = current_temperature + \
+                "°C" + "\n" + "Description = " + weather_description
+            return weather_report
 
 
 bot = Chadbot()
