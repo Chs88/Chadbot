@@ -66,7 +66,7 @@ class Chadbot:
 
     def get_weather(self):
         base_url = "http://api.openweathermap.org/data/2.5/weather?"
-        city_name = "Ealing, GB"
+        city_name = config('CITY')
         api_key = config('WEATHER_API')
         complete_url = base_url + "appid=" + api_key + "&q=" + city_name
         response = requests.get(complete_url)
