@@ -51,7 +51,8 @@ class Chadbot:
         bot.sendtext("================================")
         bot.sendtext(
             f"Good morning Krisz, today is: {self.DotW}. {self.today}!")
-        bot.sendtext(f"The temperature in Ealing is: {bot.get_weather()}")
+        bot.sendtext(
+            f"The temperature in {config('CITY')} is: {bot.get_weather()}")
         bot.sendtext("Here is a Blog post:")
         post = self.get_blog_post(self.url)
         bot.send_blogpost(post)
@@ -79,7 +80,7 @@ class Chadbot:
             z = x["weather"]
             weather_description = str(z[0]["description"])
             weather_report = current_temperature + \
-                "°C" + "\n" + "Weather description = " + weather_description
+                "°C" + "\n" + "Weather description: " + weather_description
             return weather_report
 
 
