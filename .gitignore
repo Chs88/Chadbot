@@ -3,3 +3,4 @@ usefulcode.py
 __pycache__/
 weather.py
 uptime.py
+raspiwatcher.py
