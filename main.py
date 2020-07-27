@@ -38,19 +38,16 @@ class Chadbot:
 
     # Uses a starting url to exploit the pages Random post button that always gives a random post. Bad practice but works
     def get_random_url(self):
-        starting_page = requests.get(
-            "https://seths.blog/2020/07/fake-deadlines/")
+        starting_page = requests.get(config('STARTING_PAGE'))
         soup = BeautifulSoup(starting_page.content, 'html.parser')
 
-        ## Snajdipapa ##
-        random_url = soup.find(
-            'div', class_='random-post').find('form').get('action')
-        return random_url
+        ## Snajdipapa, use try-catch ##
+        return soup.find('div', class_='random-post').find('form').get('action')
 
     def run(self):
         bot.sendtext("================================")
         bot.sendtext(
-            f"Good morning Krisz, today is: {self.DotW}. {self.today}!")
+            f"Good morning {config('NAME')}, today is: {self.DotW}. {self.today}!")
         bot.sendtext(
             f"The temperature in {config('CITY')} is: {bot.get_weather()}")
         bot.sendtext("Here is a Blog post:")
